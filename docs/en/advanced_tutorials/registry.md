@@ -1,16 +1,67 @@
 # Registry
 
-OpenMMLab supports a rich collection of algorithms and datasets, therefore, many modules with similar functionality are implemented. For example, the implementations of `ResNet` and `SE-ResNet` are based on the classes `ResNet` and `SEResNet`, respectively, which have similar functions and interfaces and belong to the model components of the algorithm library. To manage these functionally similar modules, MMEngine implements the [registry](mmengine.registry.Registry). Most of the algorithm libraries in OpenMMLab use `registry` to manage their modules, including [MMDetection](https://github.com/open-mmlab/mmdetection), [MMDetection3D](https://github.com/open-mmlab/mmdetection3d), [MMClassification](https://github.com/open-mmlab/mmclassification) and [MMEditing](https://github.com/open-mmlab/mmediting), etc.
+OpenMMLab supports a rich collection of algorithms and
+datasets,
+
+therefore,
+many modules with similar functionality are implemented.
+
+For example,
+the implementations of `ResNet` and `SE-ResNet` are based on
+the classes `ResNet` and `SEResNet`,
+respectively,
+which have similar functions and
+interfaces and
+belong to the model components of the algorithm library.
+
+To manage these functionally similar modules,
+MMEngine implements the [registry](mmengine.registry.Registry).
+Most of the algorithm libraries in OpenMMLab use `registry` to manage their modules,
+including [MMDetection](https://github.com/open-mmlab/mmdetection),
+[MMDetection3D](https://github.com/open-mmlab/mmdetection3d),
+[MMClassification](https://github.com/open-mmlab/mmclassification)
+and [MMEditing](https://github.com/open-mmlab/mmediting),
+etc.
 
 ## What is a registry
 
-The [registry](mmengine.registry.Registry) in MMEngine can be considered as a union of a mapping table and a build function of modules. The mapping table maintains a mapping from strings to **classes or functions**, allowing the user to find the corresponding class or function with its name/notation. For example, the mapping from the string `"ResNet"` to the `ResNet` class. The module build function defines how to find the corresponding class or function based on a string and how to instantiate the class or call the function. For example, finding `nn.BatchNorm2d` and instantiating the `BatchNorm2d` module by the string `"bn"`, or finding the `build_batchnorm2d` function by the string `"build_batchnorm2d"` and then returning the result. The registries in MMEngine use the [build_from_cfg](mmengine.registry.build_from_cfg) function by default to find and instantiate the class or function corresponding to the string.
+The [registry](mmengine.registry.Registry)
+in MMEngine can be considered as a union of a mapping table and
+                                            a build function of modules.
 
-The classes or functions managed by a registry usually have similar interfaces and functionality, so the registry can be treated as an abstraction of those classes or functions. For example, the registry `MODELS` can be treated as an abstraction of all models, which manages classes such as `ResNet`, `SEResNet` and `RegNetX` and constructors such as `build_ResNet`, `build_SEResNet` and `build_RegNetX`.
+The mapping table maintains a mapping 
+    from strings to **classes or  functions**,
+allowing the user to find the corresponding class or  function with its name/notation.
+For example,
+the mapping from the string `"ResNet"` to the `ResNet` class.
+The module build function 
+    defines how to find the corresponding class or  function based on  a string and
+            how to instantiate the class or  call the function.
+For example,
+    finding `nn.BatchNorm2d` and instantiating the `BatchNorm2d` module by
+    the string `"bn"`,
+or finding the `build_batchnorm2d` function by
+    the string `"build_batchnorm2d"` and then
+returning the result.
+The registries in MMEngine use the [build_from_cfg](mmengine.registry.build_from_cfg)
+function by default to find and
+instantiate the class or
+function corresponding to the string.
+
+The classes or
+functions managed by
+a registry usually have similar interfaces and  functionality,
+¿so the registry can be treated as an abstraction of those classes or  functions¿.
+For example,
+    the registry `MODELS` can be treated as an abstraction of all models,
+    which manages classes such as `ResNet`,
+                                 `SEResNet` and `RegNetX` and
+                 constructors such as `build_ResNet`,  `build_SEResNet` and `build_RegNetX`.
 
 ## Getting started
 
-There are three steps required to use the registry to manage modules in the codebase.
+There are three steps required to use the registry to
+manage modules in the codebase.
 
 1. Create a registry.
 2. Create a build method for instantiating the class (optional because in most cases you can just use the default method).
